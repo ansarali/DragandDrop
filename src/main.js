@@ -7,22 +7,24 @@ import Dropzone from "react-dropzone"
             super(props);
             this.state = {
                 files: [],
+                showImg:""
             }
             this.handleClick = this.handleClick.bind(this);
             this.onDrop = this.onDrop.bind(this);
         }
 
         handleClick (){
-           
+           this.setState({showImg:true})
         }
       
         onDrop(files) {
             this.setState({
               files: files.map(file => ({
                 ...file,
+                filedata:file,
                 preview: URL.createObjectURL(file)
               }))
-            });
+            ,showImg:false});
           }
         
           componentWillUnmount() {
@@ -61,8 +63,8 @@ import Dropzone from "react-dropzone"
             width: '100%',
             height: '100%'
             };
-            const {files} = this.state;
-            //console.log("ad",this.state)
+            const {files, filedata, showImg} = this.state;
+           
             const thumbs = files.map(file => (
                 <div style={thumb}>
                     <div style={thumbInner}>
@@ -74,7 +76,13 @@ import Dropzone from "react-dropzone"
                 </div>
                
             ));
-            //console.log("files state",this.state); 
+
+            const info = files.map(file => (
+                    <p>
+                        {file.filedata.name}
+                    </p>
+            ));
+           
             return (
                 <div>
 					<Header />
@@ -86,9 +94,13 @@ import Dropzone from "react-dropzone"
                         <div>
                              <span>Drop Files Here or Click to Upload</span>
                         </div>
+                        <br />
+                        {info}
                     </Dropzone>
-                    
+                    <input onClick={this.handleClick} type="submit" value="Show Image" />
+                    {showImg ?
                     <div> {thumbs} </div>
+                    : ""}
                 </div>
             )
         }

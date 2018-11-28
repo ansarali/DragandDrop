@@ -97,7 +97,7 @@ import Dropzone from "react-dropzone"
                         <br />
                         {info}
                     </Dropzone>
-                    <input onClick={this.handleClick} type="submit" value="Show Image" />
+                    <input style={{"marginTop":"15px"}} onClick={this.handleClick} type="submit" value="Show Image" />
                     {showImg ?
                     <div> {thumbs} </div>
                     : ""}
